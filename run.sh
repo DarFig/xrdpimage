@@ -15,6 +15,7 @@ sleep 1
 #start services
 service ssh start
 service nscd start
+service xrdp start
 systemctl enable nscd
 #sleep 100
 
