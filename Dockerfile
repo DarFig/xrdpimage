@@ -14,7 +14,7 @@ LABEL manteiner="https://github.com/DarFig"
 #
 RUN apt-get update && \
     apt-get install -y software-properties-common && \
-    apt-get install -y htop vim nano curl && \
+    apt-get install -y htop vim nano curl git wget && \
     apt-get install -y openssh-server iputils-ping
 
 #     
@@ -36,12 +36,29 @@ ADD nsswitch.conf /etc/nsswitch.conf
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q build-essential apt-utils &&\
     apt-get install -y nscd ldap-utils &&\
-    DEBIAN_FRONTEND=noninteractive apt-get install -y -q ldap-auth-client
+    DEBIAN_FRONTEND=noninteractive apt-get install -y -q ldap-auth-client 
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q xfce4 xfce4-goodies xorg \
+    dbus-x11 x11-xserver-utils xfce4-terminal xrdp gtk2-engines-murrine conky
+
+RUN update-alternatives --set x-session-manager /usr/bin/xfce4-session
+
+RUN sed -i 's/^max_bpp=32/max_bpp=16/' /etc/xrdp/xrdp.ini
+RUN sed -i '/\[globals\]/a use_compression=yes' /etc/xrdp/xrdp.ini
 
 
+RUN cd /usr/share/themes/ && git clone https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme.git && \
+    ln -s Gruvbox-GTK-Theme/themes/Gruvbox-Dark-BL /usr/share/themes/Gruvbox-Dark-BL
 
+RUN /usr/share/icons && wget https://github.com/SylEleuth/gruvbox-plus-icon-pack/releases/download/v4.0/gruvbox-plus-icon-pack-4.0.zip && \
+    unzip gruvbox-plus-icon-pack-4.0.zip
 
-EXPOSE 22
+ADD xsettings.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
+ADD xfce4-desktop.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml
+ADD conky.conf /etc/conky/conky.conf
+ADD conky.desktop /etc/xdg/autostart/conky.desktop
+
+EXPOSE 22 3389
 
 WORKDIR /
 
