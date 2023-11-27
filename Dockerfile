@@ -58,7 +58,8 @@ ADD xfce4-desktop.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xm
 ADD conky.conf /etc/conky/conky.conf
 ADD conky.desktop /etc/xdg/autostart/conky.desktop
 
-EXPOSE 22 3389
+EXPOSE 22 
+EXPOSE 3389
 
 WORKDIR /
 
