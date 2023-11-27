@@ -50,7 +50,7 @@ RUN sed -i '/\[globals\]/a use_compression=yes' /etc/xrdp/xrdp.ini
 RUN cd /usr/share/themes/ && git clone https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme.git && \
     ln -s Gruvbox-GTK-Theme/themes/Gruvbox-Dark-BL /usr/share/themes/Gruvbox-Dark-BL
 
-RUN /usr/share/icons && wget https://github.com/SylEleuth/gruvbox-plus-icon-pack/releases/download/v4.0/gruvbox-plus-icon-pack-4.0.zip && \
+RUN cd /usr/share/icons && wget https://github.com/SylEleuth/gruvbox-plus-icon-pack/releases/download/v4.0/gruvbox-plus-icon-pack-4.0.zip && \
     unzip gruvbox-plus-icon-pack-4.0.zip
 
 ADD xsettings.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
